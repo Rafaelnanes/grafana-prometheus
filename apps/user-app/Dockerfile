@@ -1,7 +1,5 @@
-FROM ghcr.io/graalvm/jdk-community:21
-
-COPY build/native/nativeCompile .
-
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY ./build/libs/user-app-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-CMD ["demo"]
+ENTRYPOINT ["java","-jar","app.jar"]

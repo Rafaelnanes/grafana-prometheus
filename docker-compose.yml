@@ -1,0 +1,23 @@
+services:
+  product-app:
+    image: product-app
+    build: ./apps/product-app
+    ports:
+      - "8081:8080"
+    restart: always
+    networks:
+      - simplenet
+  user-app:
+    image: user-app
+    build: ./apps/user-app
+    ports:
+      - "8080:8080"
+    restart: always
+    command: [ "--product.service.url=http://product-app:8080" ]
+    networks:
+      simplenet:
+        aliases:
+          - myProductApi
+
+networks:
+  simplenet:
