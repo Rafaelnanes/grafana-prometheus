@@ -22,6 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("io.micrometer:micrometer-tracing-bridge-brave")
+    implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 //    implementation("io.micrometer:micrometer-observation")
 
     // Lombok
@@ -42,4 +43,8 @@ dependencyManagement {
 tasks.bootBuildImage {
     builder = "paketobuildpacks/builder-jammy-base:latest"
     imageName = "user-app:1.0.0"
+    environment = mapOf(
+        "ZIPKIN_HOST" to "localhost",
+        "PRODUCT_SERVICE_URL" to "http://localhost:8081"
+    )
 }

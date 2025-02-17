@@ -21,6 +21,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-tracing-bridge-brave")
+    implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 
     // Lombok
     compileOnly("org.projectlombok:lombok")
@@ -40,4 +41,7 @@ dependencyManagement {
 tasks.bootBuildImage {
     builder = "paketobuildpacks/builder-jammy-base:latest"
     imageName = "product-app:1.0.0"
+    environment = mapOf(
+        "ZIPKIN_HOST" to "localhost",
+    )
 }

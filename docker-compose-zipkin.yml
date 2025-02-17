@@ -23,6 +23,19 @@ services:
     #command: [ "--product.service.url=http://product-app:8080" ]
     networks:
       - simplenet
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    environment:
+      - STORAGE_TYPE=mem
+    networks:
+      - simplenet
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "--tries=1", "--spider", "http://localhost:9411/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 networks:
   simplenet:

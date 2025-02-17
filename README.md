@@ -9,13 +9,13 @@
 #### Build Product-app
 
 ```
-gradle -p /home/rafael/dev/projects/grafana-prometheus/apps/product-app bootJar
+gradle -p /home/rafael/dev/projects/grafana-prometheus/apps/product-app bootBuildImage
 ```
 
 #### Build User-app
 
 ```
-gradle -p /home/rafael/dev/projects/grafana-prometheus/apps/user-app bootJar
+gradle -p /home/rafael/dev/projects/grafana-prometheus/apps/user-app bootBuildImage
 ```
 
 #### Create containers based on docker compose
