@@ -1,28 +1,7 @@
+include:
+  - docker-compose.base.yml
+
 services:
-  product-app:
-    image: product-app
-    build: ./apps/product-app
-    ports:
-      - "8081:8080"
-    restart: always
-    environment:
-      - SERVER_PORT=8080
-      - ZIPKIN_HOST=zipkin
-    networks:
-      - simplenet
-  user-app:
-    image: user-app
-    build: ./apps/user-app
-    ports:
-      - "8080:8080"
-    restart: always
-    environment:
-      - SERVER_PORT=8080
-      - ZIPKIN_HOST=zipkin
-      - PRODUCT_SERVICE_URL=http://product-app:8080
-    #command: [ "--product.service.url=http://product-app:8080" ]
-    networks:
-      - simplenet
   zipkin:
     image: openzipkin/zipkin
     ports:
@@ -36,6 +15,3 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-
-networks:
-  simplenet:
