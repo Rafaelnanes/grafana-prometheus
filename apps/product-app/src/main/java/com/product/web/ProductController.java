@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @RestController
@@ -33,6 +34,15 @@ public class ProductController {
   public List<Product> getProducts() {
     log.info("Getting all products");
     return products;
+  }
+
+  @GetMapping("/unstable")
+  public void unstableEndpoint() {
+    log.info("Unstable endpoint invoked");
+    long value = new Random().nextLong(1, 10);
+    if (value % 2 == 0) {
+      throw new RuntimeException("Error here");
+    }
   }
 
   @GetMapping("/{id}")

@@ -1,0 +1,71 @@
+services:
+  product-app:
+    image: product-app
+    build: ./apps/product-app
+    ports:
+      - "8081:8080"
+    restart: always
+    environment:
+      - SERVER_PORT=8080
+      - ZIPKIN_HOST=zipkin
+    networks:
+      - simplenet
+  user-app:
+    image: user-app
+    build: ./apps/user-app
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - SERVER_PORT=8080
+      - ZIPKIN_HOST=zipkin
+      - PRODUCT_SERVICE_URL=http://product-app:8080
+    #command: [ "--product.service.url=http://product-app:8080" ]
+    networks:
+      - simplenet
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    environment:
+      - STORAGE_TYPE=mem
+    networks:
+      - simplenet
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "--tries=1", "--spider", "http://localhost:9411/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - simplenet
+    depends_on:
+      - product-app
+      - user-app
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config/grafana:/etc/grafana/provisioning
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - prometheus
+      - zipkin
+    networks:
+      - simplenet
+
+networks:
+  simplenet:

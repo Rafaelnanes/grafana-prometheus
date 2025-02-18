@@ -2,9 +2,11 @@
 
 ### Pending
 
-- [ ] Add zipkin
-- [ ] Add grafana
-- [ ] Understand opentelemetry
+- [ ] Add https requirement
+- [ ] Grafana is not loading the datasources
+- [ ] Add gatling to create a lot of requests
+- [ ] Add endpoint to starve the cpu memory
+- [ ] Add endpoint to wait for a long time
 
 #### Build Product-app
 
