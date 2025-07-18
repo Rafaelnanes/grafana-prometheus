@@ -45,3 +45,6 @@ Then run it on http://localhost:3000
 sudo ss -tulnp | grep ":8080"
 jmap -dump:live,format=b,file=/path/to/your/heapdump.hprof 37869
 ```
+
+Youtube Grafana + Prometheus + Springboot
+https://www.youtube.com/watch?v=gJZhdEJvZmc
