@@ -12,16 +12,19 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,metrics,prometheus
+        include: "*"
+  endpoint.health.show-details: always
   metrics:
+    enable:
+      all: true
     tags:
       application: ${spring.application.name}
-    distribution:
-      percentiles-histogram:
-        http.server.requests: true
-  zipkin:
-    tracing:
-      endpoint: http://${ZIPKIN_HOST}:9411/api/v2/spans
-  tracing:
-    sampling:
-      probability: 1.0
+#    distribution:
+#      percentiles-histogram:
+#        http.server.requests: true
+#  zipkin:
+#    tracing:
+#      endpoint: http://${ZIPKIN_HOST}:9411/api/v2/spans
+#  tracing:
+#    sampling:
+#      probability: 1.0
